@@ -50,6 +50,7 @@ function App() {
             zIndex: 1,
             width: "100%",
             display: "flex",
+            justifyContent: "center",
             alignItems: "center",
           }}
         >
@@ -74,7 +75,7 @@ function App() {
           >
             {loading && <Spin />}
 
-            <Row gutter={[16, 16]}>
+            <Row gutter={[32, 32]}>
               {products.map((product) => (
                 <Col key={product.id} span={4} className="gutter-row">
                   <Card
