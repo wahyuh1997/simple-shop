@@ -2,3 +2,4 @@
 <a href="https://www.flaticon.com/free-icons/samsung" title="samsung icons">Samsung icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/acer" title="acer icons">Acer icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/sandisk" title="sandisk icons">Sandisk icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/seagate" title="seagate icons">Seagate icons created by Freepik - Flaticon</a>

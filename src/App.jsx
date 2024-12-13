@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { API_URL } from "./api";
 import {
+  Avatar,
   Card,
   Col,
   Flex,
   Image,
   Layout,
   Menu,
+  Rate,
   Row,
   Spin,
   theme,
@@ -15,7 +17,10 @@ import {
 import {
   FacebookOutlined,
   InstagramOutlined,
+  InsuranceOutlined,
   ShoppingCartOutlined,
+  SyncOutlined,
+  TruckOutlined,
   TwitterOutlined,
   UserOutlined,
   YoutubeOutlined,
@@ -24,6 +29,7 @@ import jumbotron from "./assets/image/jumbotron2.webp";
 import samsung from "./assets/brands/samsung.png";
 import acer from "./assets/brands/acer.png";
 import sandisk from "./assets/brands/sandisk.png";
+import seagate from "./assets/brands/seagate.png";
 // import Title from "antd/es/typography/Title";
 // import Link from "antd/es/typography/Link";
 // import Link from "antd/es/typography/Link";
@@ -153,7 +159,7 @@ function App() {
         >
           <section>
             {loading && <Spin />}
-
+            <Title style={{ textAlign: "center" }}>Popular Products</Title>
             <Row gutter={[24, 24]}>
               {products.map((product) => (
                 <Col key={product.id} span={6} className="gutter-row">
@@ -180,7 +186,9 @@ function App() {
           </section>
 
           <section>
-            <Title style={{ textAlign: "center" }}>Popular Brands</Title>
+            <Title style={{ textAlign: "center", marginTop: "6rem" }}>
+              Popular Brands
+            </Title>
             <Row gutter={[24, 16]} justify="center">
               <Col span={4}>
                 <Card
@@ -201,6 +209,167 @@ function App() {
                   style={{ backgroundColor: "#EEEEEE", textAlign: "center" }}
                 >
                   <img src={sandisk} width={85} alt="" />
+                </Card>
+              </Col>
+              <Col span={4}>
+                <Card
+                  style={{ backgroundColor: "#EEEEEE", textAlign: "center" }}
+                >
+                  <img src={seagate} width={85} alt="" />
+                </Card>
+              </Col>
+            </Row>
+          </section>
+
+          <section>
+            <Title style={{ textAlign: "center", marginTop: "9rem" }}>
+              What We Have To Offer
+            </Title>
+
+            <Row>
+              <Col span={12}>
+                <Title level={4} style={{ textAlign: "center", marginTop: 0 }}>
+                  Society has put up so many boundaries, so many limitations on
+                  what’s right and wrong that it’s almost impossible to get a
+                  pure thought out.
+                </Title>
+              </Col>
+            </Row>
+
+            <Row gutter={[24, 16]} justify="center">
+              <Col span={6}>
+                <Card>
+                  <Col span={6}>
+                    <Card type="inner" style={{ backgroundColor: "#1D293A" }}>
+                      <TruckOutlined
+                        style={{ color: "white", fontSize: "1.8rem" }}
+                      />
+                    </Card>
+                  </Col>
+                  <Title level={4}>Express Shipping</Title>
+                  <Text>
+                    The time is now for it to be okay to be great. People in
+                    this world shun people for being great.
+                  </Text>
+                </Card>
+              </Col>
+              <Col span={6}>
+                <Card>
+                  <Col span={6}>
+                    <Card type="inner" style={{ backgroundColor: "#1D293A" }}>
+                      <SyncOutlined
+                        style={{ color: "white", fontSize: "1.8rem" }}
+                      />
+                    </Card>
+                  </Col>
+                  <Title level={4}>Free Exchange</Title>
+                  <Text>
+                    The time is now for it to be okay to be great. People in
+                    this world shun people for being great.
+                  </Text>
+                </Card>
+              </Col>
+              <Col span={6}>
+                <Card>
+                  <Col span={6}>
+                    <Card type="inner" style={{ backgroundColor: "#1D293A" }}>
+                      <InsuranceOutlined
+                        style={{ color: "white", fontSize: "1.8rem" }}
+                      />
+                    </Card>
+                  </Col>
+                  <Title level={4}>Extended Warranty</Title>
+                  <Text>
+                    The time is now for it to be okay to be great. People in
+                    this world shun people for being great.
+                  </Text>
+                </Card>
+              </Col>
+            </Row>
+          </section>
+
+          <section>
+            <Title style={{ textAlign: "center", marginTop: "9rem" }}>
+              Our Customers Opinion
+            </Title>
+
+            <Row>
+              <Col span={12} offset={6}>
+                <Title level={4} style={{ textAlign: "center", marginTop: 0 }}>
+                  Society has put up so many boundaries, so many limitations on
+                  what’s right and wrong that it’s almost impossible to get a
+                  pure thought out.
+                </Title>
+              </Col>
+            </Row>
+
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <Card>
+                  <Rate
+                    allowHalf
+                    defaultValue={3.5}
+                    style={{ display: "block", marginBottom: "1.5rem" }}
+                  />
+                  <Text>
+                    We’re not always in the position that we want to be at.
+                    We’re constantly growing. We’re constantly making mistakes.
+                    We’re constantly trying to express ourselves and actualize
+                    our dreams. If you have the opportunity to play this game of
+                    life you need to appreciate every moment.
+                  </Text>
+                  <Meta
+                    avatar={<Avatar src="https://i.imgur.com/HLQBStA.jpeg" />}
+                    style={{ marginTop: "1.5rem" }}
+                    title="Leonid Afremov"
+                    description="Artist"
+                  />
+                </Card>
+              </Col>
+              <Col span={8}>
+                <Card>
+                  <Rate
+                    allowHalf
+                    defaultValue={5}
+                    style={{ display: "block", marginBottom: "1.5rem" }}
+                  />
+                  <Text>
+                    There’s nothing I really wanted to do in life that I wasn’t
+                    able to get good at. That’s my skill. I’m not really
+                    specifically talented at anything except for the ability to
+                    learn. That’s what I do. That’s what I’m here for. Don’t be
+                    afraid to be wrong because you can’t learn anything from a
+                    compliment.
+                  </Text>
+                  <Meta
+                    avatar={<Avatar src="https://i.imgur.com/a2Ckz5p.png" />}
+                    style={{ marginTop: "1.5rem" }}
+                    title="Amy Revives"
+                    description="Designer"
+                  />
+                </Card>
+              </Col>
+              <Col span={8}>
+                <Card>
+                  <Rate
+                    allowHalf
+                    defaultValue={5}
+                    style={{ display: "block", marginBottom: "1.5rem" }}
+                  />
+                  <Text>
+                    It really matters and then like it really doesn’t matter.
+                    What matters is the people who are sparked by it. And the
+                    people who are like offended by it, it doesn’t matter.
+                    Because its about motivating the doers. Because I’m here to
+                    follow my dreams and inspire other people to follow their
+                    dreams.
+                  </Text>
+                  <Meta
+                    avatar={<Avatar src="https://i.imgur.com/LVGUIAb.png" />}
+                    style={{ marginTop: "1.5rem" }}
+                    title="Vaspara The Scarlettee"
+                    description="Developer"
+                  />
                 </Card>
               </Col>
             </Row>
