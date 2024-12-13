@@ -1,1 +1,4 @@
 <a href="https://www.flaticon.com/free-icons/shop" title="shop icons">Shop icons created by srip - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/samsung" title="samsung icons">Samsung icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/acer" title="acer icons">Acer icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/sandisk" title="sandisk icons">Sandisk icons created by Freepik - Flaticon</a>
