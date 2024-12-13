@@ -1,8 +1,29 @@
 import { useEffect, useState } from "react";
 import { API_URL } from "./api";
-import { Card, Col, Layout, Menu, Row, Spin, theme } from "antd";
-import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
-import Title from "antd/es/typography/Title";
+import {
+  Card,
+  Col,
+  Flex,
+  Image,
+  Layout,
+  Menu,
+  Row,
+  Spin,
+  theme,
+  Typography,
+} from "antd";
+import {
+  FacebookOutlined,
+  InstagramOutlined,
+  ShoppingCartOutlined,
+  TwitterOutlined,
+  UserOutlined,
+  YoutubeOutlined,
+} from "@ant-design/icons";
+import jumbotron from "./assets/electronics/jumbotron2.webp";
+// import Title from "antd/es/typography/Title";
+// import Link from "antd/es/typography/Link";
+// import Link from "antd/es/typography/Link";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -12,53 +33,48 @@ function App() {
   const { Header, Content, Footer } = Layout;
   /* Card */
   const { Meta } = Card;
+  /* Typography */
+  const { Title, Text, Link } = Typography;
 
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
+  async function fetchData(category = "electronics") {
+    setLoading(true);
+    try {
+      const response = await fetch(API_URL + "products/category/" + category);
+      if (!response.ok) {
+        throw new Error("Failed Fetch Data");
+      }
+
+      const data = await response.json();
+      setProducts(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function fetchCategory() {
+    try {
+      const res = await fetch(API_URL + "products/categories");
+
+      if (!res.ok) {
+        throw new Error("Failed Get Category");
+      }
+
+      const data = await res.json();
+      setCategory(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-      try {
-        const response = await fetch(API_URL + "products");
-        if (!response.ok) {
-          throw new Error("Failed Fetch Data");
-        }
-
-        const data = await response.json();
-        setProducts(data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    async function fetchCategory() {
-      try {
-        const res = await fetch(API_URL + "products/categories");
-
-        if (!res.ok) {
-          throw new Error("Failed Get Category");
-        }
-
-        const data = await res.json();
-        console.log(data);
-        setCategory(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
     fetchData();
     fetchCategory();
   }, []);
-
-  // const items = new Array(3).fill(null).map((_, index) => ({
-  //   key: String(index + 1),
-  //   label: `nav ${index + 1}`,
-  // }));
 
   const items = category.map((cat, i) => ({
     key: i + 1,
@@ -70,7 +86,7 @@ function App() {
       <Layout>
         <Header
           style={{
-            position: "sticky",
+            position: "static",
             top: 0,
             zIndex: 1,
             width: "100%",
@@ -82,15 +98,6 @@ function App() {
           }}
         >
           {/* <div className="demo-logo" /> */}
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={["1"]}
-            items={items}
-            style={{ flex: 1, minWidth: 0 }}
-          ></Menu>
-
-          {/* <div style={{ flex: 1 }}>Simple Shop</div> */}
           <Title
             level={3}
             style={{ flex: 1, color: "#f5f5f5", marginBottom: "2rem" }}
@@ -98,13 +105,40 @@ function App() {
           >
             Simple Shop
           </Title>
-          <div>
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            defaultSelectedKeys={["1"]}
+            items={items}
+            style={{
+              flex: 2,
+              minWidth: 0,
+              textTransform: "uppercase",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+            onClick={(e) => {
+              let key = e.key - 1;
+              fetchData(items[key].label);
+            }}
+          ></Menu>
+
+          {/* <div style={{ flex: 1 }}>Simple Shop</div> */}
+
+          <div style={{ flex: 1, textAlign: "right" }}>
             <ShoppingCartOutlined
               style={{ fontSize: "1.5rem", marginRight: "1.5rem" }}
             />
             <UserOutlined style={{ fontSize: "1.5rem" }} />
           </div>
         </Header>
+
+        <Image
+          src={jumbotron}
+          height={400}
+          style={{ objectFit: "cover" }}
+          fallback="data:image/png;base64,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"
+        />
 
         <Content>
           <div
@@ -117,9 +151,9 @@ function App() {
           >
             {loading && <Spin />}
 
-            <Row gutter={[32, 32]}>
+            <Row gutter={[24, 24]}>
               {products.map((product) => (
-                <Col key={product.id} span={4} className="gutter-row">
+                <Col key={product.id} span={6} className="gutter-row">
                   <Card
                     key={product.id}
                     hoverable
@@ -142,8 +176,72 @@ function App() {
             </Row>
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
+        <Footer style={{ background: "#EFF3F4" }}>
+          {/* Ant Design ©{new Date().getFullYear()} Created by Ant UED */}
+          <Row justify="space-evenly">
+            <Col span={2}>
+              <Title level={3}>Shop</Title>
+              {category.map((cat, i) => (
+                <Link
+                  href="#"
+                  style={{
+                    display: "block",
+                    color: "#010101",
+                    marginBottom: "0.5rem",
+                    textTransform: "capitalize",
+                  }}
+                  key={i}
+                  onClick={(e) => {
+                    e.preventDefault(), fetchData(cat);
+                  }}
+                >
+                  <strong>{cat}</strong>
+                </Link>
+              ))}
+            </Col>
+            <Col span={2}>
+              <Title level={3}>Company</Title>
+              <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
+                About us
+              </Text>
+              <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
+                Stores
+              </Text>
+              <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
+                Contacts
+              </Text>
+              <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
+                Career
+              </Text>
+            </Col>
+            <Col span={2}>
+              <Title level={3}>Support</Title>
+              <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
+                Help
+              </Text>
+              <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
+                Delivery
+              </Text>
+              <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
+                Return & Refunds
+              </Text>
+              <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
+                How to pay ?
+              </Text>
+            </Col>
+            <Col span={2}>
+              <Title level={3}>Contacts</Title>
+              <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
+                +44 204 578-10-92
+              </Text>
+              <Flex justify="space-between">
+                <TwitterOutlined style={{ fontSize: "1.5rem" }} />
+                <InstagramOutlined style={{ fontSize: "1.5rem" }} />
+                <FacebookOutlined style={{ fontSize: "1.5rem" }} />
+                <YoutubeOutlined style={{ fontSize: "1.5rem" }} />
+              </Flex>
+            </Col>
+          </Row>
         </Footer>
       </Layout>
     </>
