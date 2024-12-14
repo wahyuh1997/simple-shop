@@ -2,14 +2,17 @@ import { useEffect, useState } from "react";
 import { API_URL } from "./api";
 import {
   Avatar,
+  Button,
   Card,
   Col,
   Flex,
   Image,
+  Input,
   Layout,
   Menu,
   Rate,
   Row,
+  Space,
   Spin,
   theme,
   Typography,
@@ -17,10 +20,7 @@ import {
 import {
   FacebookOutlined,
   InstagramOutlined,
-  InsuranceOutlined,
   ShoppingCartOutlined,
-  SyncOutlined,
-  TruckOutlined,
   TwitterOutlined,
   UserOutlined,
   YoutubeOutlined,
@@ -30,9 +30,9 @@ import samsung from "./assets/brands/samsung.png";
 import acer from "./assets/brands/acer.png";
 import sandisk from "./assets/brands/sandisk.png";
 import seagate from "./assets/brands/seagate.png";
-// import Title from "antd/es/typography/Title";
-// import Link from "antd/es/typography/Link";
-// import Link from "antd/es/typography/Link";
+/* Import Models */
+import { offerData } from "./models/Offer";
+import { reviewData } from "./models/Review";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -44,6 +44,7 @@ function App() {
   const { Meta } = Card;
   /* Typography */
   const { Title, Text, Link } = Typography;
+  /* Import Model */
 
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -152,6 +153,7 @@ function App() {
         <Content
           style={{
             padding: 24,
+            paddingBottom: "9rem",
             minHeight: 380,
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
@@ -159,7 +161,9 @@ function App() {
         >
           <section>
             {loading && <Spin />}
-            <Title style={{ textAlign: "center" }}>Popular Products</Title>
+            <Title style={{ textAlign: "center", marginTop: "3rem" }}>
+              Exclusive Products
+            </Title>
             <Row gutter={[24, 24]}>
               {products.map((product) => (
                 <Col key={product.id} span={6} className="gutter-row">
@@ -227,33 +231,40 @@ function App() {
             </Title>
 
             <Row>
-              <Col span={12}>
+              <Col span={12} offset={6}>
                 <Title level={4} style={{ textAlign: "center", marginTop: 0 }}>
-                  Society has put up so many boundaries, so many limitations on
-                  what’s right and wrong that it’s almost impossible to get a
-                  pure thought out.
+                  We go the extra mile to bring you convenience, flexibility,
+                  and peace of mind. Here`s why you`ll love choosing us.
                 </Title>
               </Col>
             </Row>
 
             <Row gutter={[24, 16]} justify="center">
-              <Col span={6}>
-                <Card>
-                  <Col span={6}>
-                    <Card type="inner" style={{ backgroundColor: "#1D293A" }}>
-                      <TruckOutlined
-                        style={{ color: "white", fontSize: "1.8rem" }}
-                      />
-                    </Card>
-                  </Col>
-                  <Title level={4}>Express Shipping</Title>
-                  <Text>
-                    The time is now for it to be okay to be great. People in
-                    this world shun people for being great.
-                  </Text>
-                </Card>
-              </Col>
-              <Col span={6}>
+              {offerData.map((offer) => (
+                <Col key={offer.id} span={6}>
+                  <Card>
+                    <Col span={6} style={{ paddingLeft: 0 }}>
+                      <Card
+                        type="inner"
+                        size="small"
+                        style={{
+                          backgroundColor: "#1D293A",
+                          textAlign: "center",
+                          width: "4rem",
+                        }}
+                      >
+                        {offer.icon}
+                      </Card>
+                    </Col>
+                    <Title level={4} style={{ marginTop: "1rem" }}>
+                      {offer.title}
+                    </Title>
+                    <Text>{offer.description}</Text>
+                  </Card>
+                </Col>
+              ))}
+
+              {/* <Col span={6}>
                 <Card>
                   <Col span={6}>
                     <Card type="inner" style={{ backgroundColor: "#1D293A" }}>
@@ -284,7 +295,7 @@ function App() {
                     this world shun people for being great.
                   </Text>
                 </Card>
-              </Col>
+              </Col> */}
             </Row>
           </section>
 
@@ -303,76 +314,62 @@ function App() {
               </Col>
             </Row>
 
-            <Row gutter={[24, 16]}>
-              <Col span={8}>
-                <Card>
-                  <Rate
-                    allowHalf
-                    defaultValue={3.5}
-                    style={{ display: "block", marginBottom: "1.5rem" }}
-                  />
-                  <Text>
-                    We’re not always in the position that we want to be at.
-                    We’re constantly growing. We’re constantly making mistakes.
-                    We’re constantly trying to express ourselves and actualize
-                    our dreams. If you have the opportunity to play this game of
-                    life you need to appreciate every moment.
-                  </Text>
-                  <Meta
-                    avatar={<Avatar src="https://i.imgur.com/HLQBStA.jpeg" />}
-                    style={{ marginTop: "1.5rem" }}
-                    title="Leonid Afremov"
-                    description="Artist"
-                  />
-                </Card>
-              </Col>
-              <Col span={8}>
-                <Card>
-                  <Rate
-                    allowHalf
-                    defaultValue={5}
-                    style={{ display: "block", marginBottom: "1.5rem" }}
-                  />
-                  <Text>
-                    There’s nothing I really wanted to do in life that I wasn’t
-                    able to get good at. That’s my skill. I’m not really
-                    specifically talented at anything except for the ability to
-                    learn. That’s what I do. That’s what I’m here for. Don’t be
-                    afraid to be wrong because you can’t learn anything from a
-                    compliment.
-                  </Text>
-                  <Meta
-                    avatar={<Avatar src="https://i.imgur.com/a2Ckz5p.png" />}
-                    style={{ marginTop: "1.5rem" }}
-                    title="Amy Revives"
-                    description="Designer"
-                  />
-                </Card>
-              </Col>
-              <Col span={8}>
-                <Card>
-                  <Rate
-                    allowHalf
-                    defaultValue={5}
-                    style={{ display: "block", marginBottom: "1.5rem" }}
-                  />
-                  <Text>
-                    It really matters and then like it really doesn’t matter.
-                    What matters is the people who are sparked by it. And the
-                    people who are like offended by it, it doesn’t matter.
-                    Because its about motivating the doers. Because I’m here to
-                    follow my dreams and inspire other people to follow their
-                    dreams.
-                  </Text>
-                  <Meta
-                    avatar={<Avatar src="https://i.imgur.com/LVGUIAb.png" />}
-                    style={{ marginTop: "1.5rem" }}
-                    title="Vaspara The Scarlettee"
-                    description="Developer"
-                  />
-                </Card>
+            <Row gutter={[24, 16]} justify="center">
+              {reviewData.map((review) => (
+                <Col key={review.id} span={6}>
+                  <Card>
+                    <Rate
+                      allowHalf
+                      defaultValue={review.rate}
+                      style={{ display: "block", marginBottom: "1.5rem" }}
+                    />
+                    <Text>{review.desc}</Text>
+                    <Meta
+                      avatar={<Avatar src={review.image} />}
+                      style={{ marginTop: "1.5rem" }}
+                      title={review.name}
+                      description={review.job}
+                    />
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </section>
+
+          <section>
+            <Col span={6} offset={9}>
+              <Title style={{ textAlign: "center", marginTop: "9rem" }}>
+                Subscribe our newsletter to get all updates
+              </Title>
+            </Col>
+
+            <Row>
+              <Col span={12} offset={6}>
+                <Title level={4} style={{ textAlign: "center", marginTop: 0 }}>
+                  Stay in the loop with the latest news, exclusive deals, and
+                  updates—delivered straight to your inbox!
+                </Title>
               </Col>
             </Row>
+
+            <Col span={6} offset={9}>
+              <Space.Compact style={{ width: "100%" }}>
+                <Input placeholder="Enter your email" />
+                <Button type="default" color="default" variant="solid">
+                  Subscribe
+                </Button>
+              </Space.Compact>
+            </Col>
+
+            <Col span={6} offset={9} style={{ textAlign: "center" }}>
+              <Text type="secondary" style={{ display: "block" }}>
+                You will be able to unsubscribe at any time.
+              </Text>
+              <Text type="secondary">Read our Privacy Policy </Text>
+              <Link href="https://ant.design" target="_blank">
+                here
+              </Link>
+            </Col>
           </section>
         </Content>
         <Footer style={{ background: "#EFF3F4" }}>
