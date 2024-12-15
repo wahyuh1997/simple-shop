@@ -5,11 +5,9 @@ import {
   Button,
   Card,
   Col,
-  Flex,
   Image,
   Input,
   Layout,
-  Menu,
   Rate,
   Row,
   Space,
@@ -17,14 +15,7 @@ import {
   theme,
   Typography,
 } from "antd";
-import {
-  FacebookOutlined,
-  InstagramOutlined,
-  ShoppingCartOutlined,
-  TwitterOutlined,
-  UserOutlined,
-  YoutubeOutlined,
-} from "@ant-design/icons";
+
 // import jumbotron from "./assets/image/jumbotron/electronics.jpg";
 
 /* Import Models */
@@ -32,6 +23,9 @@ import { offerData } from "./models/Offer";
 import { reviewData } from "./models/Review";
 import BrandData from "./models/Brands";
 import JumbotronData from "./models/Jumbotron";
+import { useNavigate } from "react-router";
+import HeadersComponent from "./HeadersComponent";
+import FooterComponent from "./FooterComponent";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -41,12 +35,13 @@ function App() {
   const [loading, setLoading] = useState(false);
   const isFirstRender = useRef(true);
   /* Template Layout ANTD */
-  const { Header, Content, Footer } = Layout;
+  const { Content } = Layout;
   /* Card */
   const { Meta } = Card;
   /* Typography */
   const { Title, Text, Link } = Typography;
   /* Import Model */
+  const navigate = useNavigate();
 
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -86,6 +81,7 @@ function App() {
       console.log(error);
     }
   }
+
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -96,61 +92,10 @@ function App() {
     fetchCategory();
   }, []);
 
-  const items = category.map((cat, i) => ({
-    key: i + 1,
-    label: cat,
-  }));
-
   return (
     <>
       <Layout>
-        <Header
-          style={{
-            position: "static",
-            top: 0,
-            zIndex: 1,
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-            color: "#f5f5f5",
-          }}
-        >
-          {/* <div className="demo-logo" /> */}
-          <Title
-            level={3}
-            style={{ flex: 1, color: "#f5f5f5", marginBottom: "2rem" }}
-            type="light"
-          >
-            Simple Shop
-          </Title>
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={["1"]}
-            items={items}
-            style={{
-              flex: 2,
-              minWidth: 0,
-              textTransform: "uppercase",
-              justifyContent: "center",
-              textAlign: "center",
-            }}
-            onClick={(e) => {
-              let key = e.key - 1;
-              fetchData(items[key].label);
-            }}
-          ></Menu>
-
-          {/* <div style={{ flex: 1 }}>Simple Shop</div> */}
-
-          <div style={{ flex: 1, textAlign: "right" }}>
-            <ShoppingCartOutlined
-              style={{ fontSize: "1.5rem", marginRight: "1.5rem" }}
-            />
-            <UserOutlined style={{ fontSize: "1.5rem" }} />
-          </div>
-        </Header>
+        <HeadersComponent category={category} fetchData={fetchData} />
 
         <Image
           src={jumbotron}
@@ -182,11 +127,12 @@ function App() {
                     hoverable
                     style={{ width: "100%", textAlign: "center" }}
                     loading={loading}
+                    onClick={() => navigate("details/" + product.id)}
                     cover={
                       <Image
                         alt={product.title}
                         src={product.image}
-                        preview={loading}
+                        preview={!loading}
                         style={{ height: "18rem", objectFit: "contain" }}
                       />
                     }
@@ -332,73 +278,8 @@ function App() {
             </Col>
           </section>
         </Content>
-        <Footer style={{ background: "#EFF3F4" }}>
-          {/* Ant Design ©{new Date().getFullYear()} Created by Ant UED */}
-          <Row justify="space-evenly">
-            <Col span={2}>
-              <Title level={3}>Shop</Title>
-              {category.map((cat, i) => (
-                <Link
-                  href="#"
-                  style={{
-                    display: "block",
-                    color: "#010101",
-                    marginBottom: "0.5rem",
-                    textTransform: "capitalize",
-                  }}
-                  key={i}
-                  onClick={(e) => {
-                    e.preventDefault(), fetchData(cat);
-                  }}
-                >
-                  <strong>{cat}</strong>
-                </Link>
-              ))}
-            </Col>
-            <Col span={2}>
-              <Title level={3}>Company</Title>
-              <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
-                About us
-              </Text>
-              <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
-                Stores
-              </Text>
-              <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
-                Contacts
-              </Text>
-              <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
-                Career
-              </Text>
-            </Col>
-            <Col span={2}>
-              <Title level={3}>Support</Title>
-              <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
-                Help
-              </Text>
-              <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
-                Delivery
-              </Text>
-              <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
-                Return & Refunds
-              </Text>
-              <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
-                How to pay ?
-              </Text>
-            </Col>
-            <Col span={2}>
-              <Title level={3}>Contacts</Title>
-              <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
-                +44 204 578-10-92
-              </Text>
-              <Flex justify="space-between">
-                <TwitterOutlined style={{ fontSize: "1.5rem" }} />
-                <InstagramOutlined style={{ fontSize: "1.5rem" }} />
-                <FacebookOutlined style={{ fontSize: "1.5rem" }} />
-                <YoutubeOutlined style={{ fontSize: "1.5rem" }} />
-              </Flex>
-            </Col>
-          </Row>
-        </Footer>
+
+        <FooterComponent category={category} fetchData={fetchData} />
       </Layout>
     </>
   );
