@@ -14,7 +14,11 @@ function createSlug(input) {
     .replace(/[^a-z0-9\s-]/g, "") // Remove special characters except spaces and dashes
     .replace(/\s+/g, "-"); // Replace spaces with dashes
 }
-export default function HeadersComponent({ category, linkactive }) {
+export default function HeadersComponent({
+  category,
+  linkactive,
+  setlinkactive,
+}) {
   const items = category.map((cat, i) => ({
     key: i + 1,
     label: cat,
@@ -35,7 +39,6 @@ export default function HeadersComponent({ category, linkactive }) {
           color: "#f5f5f5",
         }}
       >
-        {/* <div className="demo-logo" /> */}
         <Title
           level={3}
           style={{ flex: 1, color: "#f5f5f5", marginBottom: "2rem" }}
@@ -44,9 +47,11 @@ export default function HeadersComponent({ category, linkactive }) {
           Simple Shop
         </Title>
 
-        <MenuComponent items={items} linkActive={linkactive} />
-
-        {/* <div style={{ flex: 1 }}>Simple Shop</div> */}
+        <MenuComponent
+          items={items}
+          linkActive={linkactive}
+          setlinkactive={setlinkactive}
+        />
 
         <div style={{ flex: 1, textAlign: "right" }}>
           <ShoppingCartOutlined

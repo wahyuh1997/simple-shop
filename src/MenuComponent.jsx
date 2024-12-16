@@ -2,7 +2,7 @@
 import { Menu } from "antd";
 import { useNavigate } from "react-router";
 
-export default function MenuComponent({ items, linkActive }) {
+export default function MenuComponent({ items, linkActive, setlinkactive }) {
   const navigate = useNavigate();
 
   return (
@@ -21,6 +21,7 @@ export default function MenuComponent({ items, linkActive }) {
         }}
         onClick={(e) => {
           let key = e.key - 1;
+          setlinkactive(e.key);
           navigate(items[key].url);
         }}
       ></Menu>

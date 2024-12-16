@@ -68,7 +68,11 @@ export default function App() {
   return (
     <>
       <Layout>
-        <HeadersComponent category={category} linkactive={String(linkActive)} />
+        <HeadersComponent
+          category={category}
+          linkactive={String(linkActive)}
+          setlinkactive={setLinkActive}
+        />
 
         <MyContext.Provider value="">
           <Outlet />
