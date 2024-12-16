@@ -6,13 +6,22 @@ import { Layout } from "antd";
 /* Import Component */
 import HeadersComponent from "./HeadersComponent";
 import FooterComponent from "./FooterComponent";
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 // import ProductsComponent from "./ProductsComponent";
 export const MyContext = createContext();
 
+function reverseSlug(slug) {
+  return slug
+    .replace(/-/g, " ") // Replace dashes with spaces
+    .replace(/\bmens\b/, "men's") // Handle "mens" -> "men's"
+    .replace(/\bwomens\b/, "women's"); // Handle "womens" -> "women's"
+}
+
 export default function App() {
   const [category, setCategory] = useState([]);
+  const [linkActive, setLinkActive] = useState("");
   const isFirstRender = useRef(true);
+  const location = useLocation();
 
   /* Import Model */
 
@@ -25,6 +34,22 @@ export default function App() {
       }
 
       const data = await res.json();
+
+      let searchText = reverseSlug(location.pathname); // Example input
+      // Normalize the text for comparison
+      const normalize = (text) =>
+        text.toLowerCase().replace(/^\//, "").replace(/[\s']/g, "-");
+
+      // Normalize the search text
+      searchText = normalize(searchText);
+
+      // Find the index (key) of the matching item
+      const index = data.findIndex(
+        (category) => normalize(category) == searchText
+      );
+
+      setLinkActive(String(index + 1));
+
       setCategory(data);
     } catch (error) {
       console.log(error);
@@ -43,7 +68,7 @@ export default function App() {
   return (
     <>
       <Layout>
-        <HeadersComponent category={category} linkactive={2} />
+        <HeadersComponent category={category} linkactive={String(linkActive)} />
 
         <MyContext.Provider value="">
           <Outlet />

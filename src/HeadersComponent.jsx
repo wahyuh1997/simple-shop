@@ -1,8 +1,9 @@
-import PropTypes from "prop-types";
+/* eslint-disable react/prop-types */
 import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
-import { Menu, Typography } from "antd";
+import { Typography } from "antd";
 import { Header } from "antd/es/layout/layout";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
+import MenuComponent from "./MenuComponent";
 // import { useEffect, useState } from "react";
 const { Title } = Typography;
 
@@ -19,14 +20,6 @@ export default function HeadersComponent({ category, linkactive }) {
     label: cat,
     url: createSlug(cat),
   }));
-
-  const navigate = useNavigate();
-  // const location = useLocation();
-
-  // // Calculate the active key dynamically based on the current URL
-  // const activeKey = items.find((item) =>
-  //   location.pathname.includes(item.url)
-  // )?.key;
 
   return (
     <>
@@ -50,23 +43,8 @@ export default function HeadersComponent({ category, linkactive }) {
         >
           Simple Shop
         </Title>
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={[String(linkactive)]}
-          items={items}
-          style={{
-            flex: 2,
-            minWidth: 0,
-            textTransform: "uppercase",
-            justifyContent: "center",
-            textAlign: "center",
-          }}
-          onClick={(e) => {
-            let key = e.key - 1;
-            navigate(items[key].url);
-          }}
-        ></Menu>
+
+        <MenuComponent items={items} linkActive={linkactive} />
 
         {/* <div style={{ flex: 1 }}>Simple Shop</div> */}
 
@@ -80,8 +58,3 @@ export default function HeadersComponent({ category, linkactive }) {
     </>
   );
 }
-
-HeadersComponent.propTypes = {
-  category: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
-  fetchData: PropTypes.func,
-};
