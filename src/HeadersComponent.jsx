@@ -2,7 +2,8 @@ import PropTypes from "prop-types";
 import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
 import { Menu, Typography } from "antd";
 import { Header } from "antd/es/layout/layout";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
+// import { useEffect, useState } from "react";
 const { Title } = Typography;
 
 function createSlug(input) {
@@ -12,23 +13,20 @@ function createSlug(input) {
     .replace(/[^a-z0-9\s-]/g, "") // Remove special characters except spaces and dashes
     .replace(/\s+/g, "-"); // Replace spaces with dashes
 }
-export default function HeadersComponent({ category }) {
+export default function HeadersComponent({ category, linkactive }) {
   const items = category.map((cat, i) => ({
     key: i + 1,
     label: cat,
     url: createSlug(cat),
   }));
 
-  const location = useLocation();
-
-  let activeKey = items.findIndex(
-    (item) => location.pathname == "/" + item.url
-  );
-  activeKey = String(activeKey + 1);
-
-  // console.log(activeKey);
-
   const navigate = useNavigate();
+  // const location = useLocation();
+
+  // // Calculate the active key dynamically based on the current URL
+  // const activeKey = items.find((item) =>
+  //   location.pathname.includes(item.url)
+  // )?.key;
 
   return (
     <>
@@ -55,7 +53,7 @@ export default function HeadersComponent({ category }) {
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={[String(activeKey)]}
+          defaultSelectedKeys={[String(linkactive)]}
           items={items}
           style={{
             flex: 2,
@@ -67,7 +65,6 @@ export default function HeadersComponent({ category }) {
           onClick={(e) => {
             let key = e.key - 1;
             navigate(items[key].url);
-            // fetchData(items[key].label);
           }}
         ></Menu>
 

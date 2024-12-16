@@ -43,7 +43,7 @@ export default function App() {
   return (
     <>
       <Layout>
-        <HeadersComponent category={category} />
+        <HeadersComponent category={category} linkactive={2} />
 
         <MyContext.Provider value="">
           <Outlet />
