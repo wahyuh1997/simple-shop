@@ -7,11 +7,21 @@ import {
 } from "@ant-design/icons";
 import { Col, Flex, Row, Typography } from "antd";
 import { Footer } from "antd/es/layout/layout";
+import { useNavigate } from "react-router";
 
 /* Typography */
 const { Title, Text, Link } = Typography;
 
-export default function FooterComponent({ category, fetchData }) {
+function createSlug(input) {
+  return input
+    .toLowerCase() // Convert to lowercase
+    .trim() // Remove leading and trailing spaces
+    .replace(/[^a-z0-9\s-]/g, "") // Remove special characters except spaces and dashes
+    .replace(/\s+/g, "-"); // Replace spaces with dashes
+}
+export default function FooterComponent({ category }) {
+  const navigate = useNavigate();
+
   return (
     <>
       <Footer style={{ background: "#EFF3F4" }}>
@@ -30,7 +40,8 @@ export default function FooterComponent({ category, fetchData }) {
                 }}
                 key={i}
                 onClick={(e) => {
-                  e.preventDefault(), fetchData(cat);
+                  e.preventDefault();
+                  navigate(createSlug(cat));
                 }}
               >
                 <strong>{cat}</strong>

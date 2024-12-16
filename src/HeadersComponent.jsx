@@ -2,13 +2,33 @@ import PropTypes from "prop-types";
 import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
 import { Menu, Typography } from "antd";
 import { Header } from "antd/es/layout/layout";
+import { useLocation, useNavigate } from "react-router";
 const { Title } = Typography;
 
-export default function HeadersComponent({ category, fetchData }) {
+function createSlug(input) {
+  return input
+    .toLowerCase() // Convert to lowercase
+    .trim() // Remove leading and trailing spaces
+    .replace(/[^a-z0-9\s-]/g, "") // Remove special characters except spaces and dashes
+    .replace(/\s+/g, "-"); // Replace spaces with dashes
+}
+export default function HeadersComponent({ category }) {
   const items = category.map((cat, i) => ({
     key: i + 1,
     label: cat,
+    url: createSlug(cat),
   }));
+
+  const location = useLocation();
+
+  let activeKey = items.findIndex(
+    (item) => location.pathname == "/" + item.url
+  );
+  activeKey = String(activeKey + 1);
+
+  // console.log(activeKey);
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -35,7 +55,7 @@ export default function HeadersComponent({ category, fetchData }) {
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={[String(activeKey)]}
           items={items}
           style={{
             flex: 2,
@@ -46,7 +66,8 @@ export default function HeadersComponent({ category, fetchData }) {
           }}
           onClick={(e) => {
             let key = e.key - 1;
-            fetchData(items[key].label);
+            navigate(items[key].url);
+            // fetchData(items[key].label);
           }}
         ></Menu>
 
