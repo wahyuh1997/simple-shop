@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from "prop-types";
-import { createContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { API_URL } from "./api";
 import { Layout } from "antd";
 
@@ -8,8 +7,7 @@ import { Layout } from "antd";
 import HeadersComponent from "./HeadersComponent";
 import FooterComponent from "./FooterComponent";
 import { Outlet, useLocation } from "react-router";
-// import ProductsComponent from "./ProductsComponent";
-export const MyContext = createContext();
+import { ProductProvider } from "./context/ProductContext";
 
 function reverseSlug(slug) {
   return slug
@@ -67,6 +65,7 @@ export default function App() {
     }
 
     fetchCategory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -78,9 +77,9 @@ export default function App() {
           setlinkactive={setLinkActive}
         />
 
-        <MyContext.Provider value="">
+        <ProductProvider>
           <Outlet />
-        </MyContext.Provider>
+        </ProductProvider>
 
         <FooterComponent category={category} />
       </Layout>
