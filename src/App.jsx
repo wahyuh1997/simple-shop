@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from "prop-types";
 import { createContext, useEffect, useRef, useState } from "react";
 import { API_URL } from "./api";
@@ -19,7 +20,7 @@ function reverseSlug(slug) {
 
 export default function App() {
   const [category, setCategory] = useState([]);
-  const [linkActive, setLinkActive] = useState("");
+  const [linkActive, setLinkActive] = useState(1);
   const isFirstRender = useRef(true);
   const location = useLocation();
 
@@ -35,7 +36,10 @@ export default function App() {
 
       const data = await res.json();
 
-      let searchText = reverseSlug(location.pathname); // Example input
+      let searchText =
+        location.pathname == "/"
+          ? "electronics"
+          : reverseSlug(location.pathname); // Example input
       // Normalize the text for comparison
       const normalize = (text) =>
         text.toLowerCase().replace(/^\//, "").replace(/[\s']/g, "-");
@@ -48,9 +52,9 @@ export default function App() {
         (category) => normalize(category) == searchText
       );
 
-      setLinkActive(String(index + 1));
-
       setCategory(data);
+
+      setLinkActive(String(index + 1));
     } catch (error) {
       console.log(error);
     }

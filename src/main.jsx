@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import Details from "./Details.jsx";
 import ProductsComponent from "./ProductsComponent.jsx";
 // import Electronics from "./pages/Electronics.jsx";
@@ -12,9 +12,15 @@ createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route path="/:productCategory" element={<ProductsComponent />} />
-          {/* <Route path="jewelery" element={<Jewelry />} /> */}
-          <Route path="details/:productsId" element={<Details />} />
+          {/* Redirect index path "/" to "/electronics" */}
+          <Route index element={<Navigate to="/electronics" replace />} />
+          {/* Route for product category */}
+          <Route path=":productCategory" element={<ProductsComponent />} />
+          {/* Route for product details */}
+          <Route
+            path=":productCategory/details/:productsId"
+            element={<Details />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>
