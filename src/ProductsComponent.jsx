@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from "prop-types";
 import {
   Avatar,
@@ -14,16 +13,15 @@ import {
   theme,
   Typography,
 } from "antd";
-
+import { API_URL } from "./Api";
 import { offerData } from "./models/Offer";
 import { reviewData } from "./models/Review";
 import { useNavigate, useParams } from "react-router";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /* Import Models */
 import BrandData from "./models/Brands";
 import JumbotronData from "./models/Jumbotron";
-import { ProductContext } from "./context/ProductContext";
 
 /* Template Layout ANTD */
 const { Content } = Layout;
@@ -58,8 +56,6 @@ export default function ProductsComponent() {
   const navigate = useNavigate();
 
   const isFirstRender = useRef(true);
-
-  const API_URL = useContext(ProductContext);
 
   useEffect(() => {
     async function fetchData() {

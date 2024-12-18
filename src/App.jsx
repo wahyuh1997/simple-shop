@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
-import { API_URL } from "./api";
+import { API_URL } from "./Api";
 import { Layout } from "antd";
 
 /* Import Component */
@@ -24,60 +24,59 @@ export default function App() {
 
   /* Import Model */
 
-  async function fetchCategory() {
-    try {
-      const res = await fetch(API_URL + "products/categories");
-
-      if (!res.ok) {
-        throw new Error("Failed Get Category");
-      }
-
-      const data = await res.json();
-
-      let searchText =
-        location.pathname == "/"
-          ? "electronics"
-          : reverseSlug(location.pathname); // Example input
-      // Normalize the text for comparison
-      const normalize = (text) =>
-        text.toLowerCase().replace(/^\//, "").replace(/[\s']/g, "-");
-
-      // Normalize the search text
-      searchText = normalize(searchText);
-
-      // Find the index (key) of the matching item
-      const index = data.findIndex(
-        (category) => normalize(category) == searchText
-      );
-
-      setCategory(data);
-
-      setLinkActive(String(index + 1));
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   useEffect(() => {
+    async function fetchCategory() {
+      try {
+        const res = await fetch(API_URL + "products/categories");
+
+        if (!res.ok) {
+          throw new Error("Failed Get Category");
+        }
+
+        const data = await res.json();
+
+        let searchText =
+          location.pathname == "/"
+            ? "electronics"
+            : reverseSlug(location.pathname); // Example input
+        // Normalize the text for comparison
+        const normalize = (text) =>
+          text.toLowerCase().replace(/^\//, "").replace(/[\s']/g, "-");
+
+        // Normalize the search text
+        searchText = normalize(searchText);
+
+        // Find the index (key) of the matching item
+        const index = data.findIndex(
+          (category) => normalize(category) == searchText
+        );
+
+        setCategory(data);
+
+        setLinkActive(String(index + 1));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
     }
 
     fetchCategory();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [location.pathname]);
 
   return (
     <>
       <Layout>
-        <HeadersComponent
-          category={category}
-          linkactive={String(linkActive)}
-          setlinkactive={setLinkActive}
-          apiurl={API_URL}
-        />
         <ProductProvider>
+          <HeadersComponent
+            category={category}
+            linkactive={String(linkActive)}
+            setlinkactive={setLinkActive}
+          />
+
           <Outlet />
         </ProductProvider>
 

@@ -3,7 +3,8 @@ import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Badge, Typography } from "antd";
 import { Header } from "antd/es/layout/layout";
 import MenuComponent from "./MenuComponent";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { ProductContext } from "./context/ProductContext";
 const { Title } = Typography;
 
 function createSlug(input) {
@@ -18,32 +19,14 @@ export default function HeadersComponent({
   category,
   linkactive,
   setlinkactive,
-  apiurl,
 }) {
-  const [totalCart, setTotalCart] = useState(0);
-  /* Fetch Cart List */
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch(apiurl + "carts/user/2");
-        if (!response.ok) {
-          throw new Error("Failed Get Cart");
-        }
-        const data = await response.json();
-        setTotalCart(data[0].products.length);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    fetchData();
-  }, [apiurl, totalCart]);
-
   const items = category.map((cat, i) => ({
     key: i + 1,
     label: cat,
     url: createSlug(cat),
   }));
+
+  const ctx = useContext(ProductContext);
 
   return (
     <>
@@ -74,7 +57,7 @@ export default function HeadersComponent({
         />
 
         <div style={{ flex: 1, textAlign: "right" }}>
-          <Badge count={totalCart} offset={[-9, 14]}>
+          <Badge count={ctx.totalCart} offset={[-9, 14]}>
             <Avatar icon={<ShoppingCartOutlined />} size={50} />
           </Badge>
 

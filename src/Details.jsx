@@ -1,4 +1,5 @@
 import { useParams } from "react-router";
+import { API_URL } from "./Api";
 import { useContext, useEffect, useState } from "react";
 import {
   Button,
@@ -23,7 +24,8 @@ export default function Details() {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [showNotif, setShowNotif] = useState(false);
   const [qty, setQty] = useState(1);
-  const API_URL = useContext(ProductContext);
+
+  const { totalCart, setTotalCart } = useContext(ProductContext);
 
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -48,7 +50,7 @@ export default function Details() {
     }
 
     fetchSingleData();
-  }, [API_URL, params.productsId]);
+  }, [params.productsId]);
 
   async function handleAddToCart() {
     setButtonLoading(true);
@@ -182,7 +184,10 @@ export default function Details() {
                 type="primary"
                 size="large"
                 style={{ background: "#001529" }}
-                onClick={handleAddToCart}
+                onClick={() => {
+                  handleAddToCart();
+                  setTotalCart(qty + totalCart);
+                }}
                 loading={buttonLoading}
               >
                 Add to cart
