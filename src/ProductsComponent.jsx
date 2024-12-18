@@ -18,12 +18,12 @@ import {
 import { offerData } from "./models/Offer";
 import { reviewData } from "./models/Review";
 import { useNavigate, useParams } from "react-router";
-import { useEffect, useRef, useState } from "react";
-import { API_URL } from "./api";
+import { useContext, useEffect, useRef, useState } from "react";
 
 /* Import Models */
 import BrandData from "./models/Brands";
 import JumbotronData from "./models/Jumbotron";
+import { ProductContext } from "./context/ProductContext";
 
 /* Template Layout ANTD */
 const { Content } = Layout;
@@ -59,35 +59,36 @@ export default function ProductsComponent() {
 
   const isFirstRender = useRef(true);
 
-  async function fetchData() {
-    setLoading(true);
-    try {
-      const response = await fetch(
-        API_URL + "products/category/" + params.productCategory
-      );
-      if (!response.ok) {
-        throw new Error("Failed Fetch Data");
-      }
-
-      setBrands(BrandData(params.productCategory));
-      setJumbotron(JumbotronData(params.productCategory));
-
-      const data = await response.json();
-      setProducts(data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  }
+  const API_URL = useContext(ProductContext);
 
   useEffect(() => {
+    async function fetchData() {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          API_URL + "products/category/" + params.productCategory
+        );
+        if (!response.ok) {
+          throw new Error("Failed Fetch Data");
+        }
+
+        setBrands(BrandData(params.productCategory));
+        setJumbotron(JumbotronData(params.productCategory));
+
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
     }
 
-    // setCategory(params.productCategory);
     fetchData();
   }, [params.productCategory]);
 
