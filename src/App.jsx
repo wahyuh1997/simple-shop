@@ -75,8 +75,8 @@ export default function App() {
           category={category}
           linkactive={String(linkActive)}
           setlinkactive={setLinkActive}
+          apiurl={API_URL}
         />
-
         <ProductProvider>
           <Outlet />
         </ProductProvider>

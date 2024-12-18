@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
 import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
-import { Typography } from "antd";
+import { Avatar, Badge, Typography } from "antd";
 import { Header } from "antd/es/layout/layout";
-// import { useNavigate } from "react-router";
 import MenuComponent from "./MenuComponent";
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 const { Title } = Typography;
 
 function createSlug(input) {
@@ -14,11 +13,32 @@ function createSlug(input) {
     .replace(/[^a-z0-9\s-]/g, "") // Remove special characters except spaces and dashes
     .replace(/\s+/g, "-"); // Replace spaces with dashes
 }
+
 export default function HeadersComponent({
   category,
   linkactive,
   setlinkactive,
+  apiurl,
 }) {
+  const [totalCart, setTotalCart] = useState(0);
+  /* Fetch Cart List */
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(apiurl + "carts/user/2");
+        if (!response.ok) {
+          throw new Error("Failed Get Cart");
+        }
+        const data = await response.json();
+        setTotalCart(data[0].products.length);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchData();
+  }, [apiurl, totalCart]);
+
   const items = category.map((cat, i) => ({
     key: i + 1,
     label: cat,
@@ -54,10 +74,15 @@ export default function HeadersComponent({
         />
 
         <div style={{ flex: 1, textAlign: "right" }}>
-          <ShoppingCartOutlined
-            style={{ fontSize: "1.5rem", marginRight: "1.5rem" }}
+          <Badge count={totalCart} offset={[-9, 14]}>
+            <Avatar icon={<ShoppingCartOutlined />} size={50} />
+          </Badge>
+
+          <Avatar
+            icon={<UserOutlined />}
+            size={50}
+            style={{ marginLeft: "0.5rem" }}
           />
-          <UserOutlined style={{ fontSize: "1.5rem" }} />
         </div>
       </Header>
     </>
