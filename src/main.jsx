@@ -2,8 +2,9 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
-import Details from "./Details.jsx";
-import ProductsComponent from "./ProductsComponent.jsx";
+import Details from "./pages/Details.jsx";
+import ProductsComponent from "./pages/ProductsComponent.jsx";
+import CartsComponent from "./pages/CartsComponent.jsx";
 // import Electronics from "./pages/Electronics.jsx";
 // import Jewelry from "./pages/Jewelry.jsx";
 
@@ -21,6 +22,7 @@ createRoot(document.getElementById("root")).render(
             path=":productCategory/details/:productsId"
             element={<Details />}
           />
+          <Route path="carts/:cartId" element={<CartsComponent />} />
         </Route>
       </Routes>
     </BrowserRouter>

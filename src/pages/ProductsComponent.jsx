@@ -13,15 +13,15 @@ import {
   theme,
   Typography,
 } from "antd";
-import { API_URL } from "./Api";
-import { offerData } from "./models/Offer";
-import { reviewData } from "./models/Review";
+import { API_URL } from "../Api";
+import { offerData } from "../models/Offer";
+import { reviewData } from "../models/Review";
 import { useNavigate, useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 
 /* Import Models */
-import BrandData from "./models/Brands";
-import JumbotronData from "./models/Jumbotron";
+import BrandData from "../models/Brands";
+import JumbotronData from "../models/Jumbotron";
 
 /* Template Layout ANTD */
 const { Content } = Layout;

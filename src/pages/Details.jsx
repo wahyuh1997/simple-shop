@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { API_URL } from "./Api";
+import { API_URL } from "../Api";
 import { useContext, useEffect, useState } from "react";
 import {
   Button,
@@ -14,7 +14,7 @@ import {
   Typography,
 } from "antd";
 import { Content } from "antd/es/layout/layout";
-import { ProductContext } from "./context/ProductContext";
+import { ProductContext } from "../context/ProductContext";
 
 const { Title, Text } = Typography;
 export default function Details() {

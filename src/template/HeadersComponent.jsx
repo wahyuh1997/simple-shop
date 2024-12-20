@@ -4,7 +4,8 @@ import { Avatar, Badge, Typography } from "antd";
 import { Header } from "antd/es/layout/layout";
 import MenuComponent from "./MenuComponent";
 import { useContext } from "react";
-import { ProductContext } from "./context/ProductContext";
+import { ProductContext } from "../context/ProductContext";
+import { useNavigate } from "react-router";
 const { Title } = Typography;
 
 function createSlug(input) {
@@ -27,6 +28,8 @@ export default function HeadersComponent({
   }));
 
   const ctx = useContext(ProductContext);
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -58,13 +61,18 @@ export default function HeadersComponent({
 
         <div style={{ flex: 1, textAlign: "right" }}>
           <Badge count={ctx.totalCart} offset={[-9, 14]}>
-            <Avatar icon={<ShoppingCartOutlined />} size={50} />
+            <Avatar
+              icon={<ShoppingCartOutlined />}
+              size={50}
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("carts/5")}
+            />
           </Badge>
 
           <Avatar
             icon={<UserOutlined />}
             size={50}
-            style={{ marginLeft: "0.5rem" }}
+            style={{ marginLeft: "0.5rem", cursor: "pointer" }}
           />
         </div>
       </Header>

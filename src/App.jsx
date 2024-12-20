@@ -4,8 +4,8 @@ import { API_URL } from "./Api";
 import { Layout } from "antd";
 
 /* Import Component */
-import HeadersComponent from "./HeadersComponent";
-import FooterComponent from "./FooterComponent";
+import HeadersComponent from "./template/HeadersComponent";
+import FooterComponent from "./template/FooterComponent";
 import { Outlet, useLocation } from "react-router";
 import { ProductProvider } from "./context/ProductContext";
 
