@@ -1,5 +1,5 @@
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import Details from "./pages/Details.jsx";
@@ -8,7 +8,7 @@ import CartsComponent from "./pages/CartsComponent.jsx";
 // import Electronics from "./pages/Electronics.jsx";
 // import Jewelry from "./pages/Jewelry.jsx";
 
-createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
