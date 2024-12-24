@@ -50,7 +50,7 @@ export default function ProductsComponent() {
   // const [category, setCategory] = useState("electronics");
 
   const [brands, setBrands] = useState([]);
-  const [jumbotron, setJumbotron] = useState("");
+  const [jumbotron, setJumbotron] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
