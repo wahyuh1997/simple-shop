@@ -1,0 +1,34 @@
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .jumbotron {
+    object-fit: contain !important;
+    height: auto !important;
+  }
+
+  .ant-image {
+    object-fit: contain !important;
+    height: auto !important;
+  }
+
+  .titleNav {
+    display: none !important;
+  }
+
+  .cardSummary {
+    padding: 0px !important;
+  }
+
+  .profileHeader {
+    display: none !important;
+  }
+
+  .header {
+    padding: 0 !important;
+  }
+
+  .menu {
+    font-size: 9px !important;
+    padding: 0 !important;
+  }
+}
+

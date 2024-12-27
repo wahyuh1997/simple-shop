@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { ProductContext } from "../context/ProductContext";
 import { useNavigate } from "react-router";
 const { Title } = Typography;
+import styles from "../styles/App.module.css";
 
 function createSlug(input) {
   return input
@@ -34,6 +35,7 @@ export default function HeadersComponent({
   return (
     <>
       <Header
+        className={styles.header}
         style={{
           position: "static",
           top: 0,
@@ -46,6 +48,7 @@ export default function HeadersComponent({
         }}
       >
         <Title
+          className={styles.titleNav}
           level={3}
           style={{ flex: 1, color: "#f5f5f5", marginBottom: "2rem" }}
           type="light"
@@ -59,11 +62,14 @@ export default function HeadersComponent({
           setlinkactive={setlinkactive}
         />
 
-        <div style={{ flex: 1, textAlign: "right" }}>
-          <Badge count={ctx.totalCart} offset={[-9, 14]}>
+        <div
+          className={styles.profileHeader}
+          style={{ flex: 1, textAlign: "right" }}
+        >
+          <Badge count={ctx.totalCart} size="small" offset={[-9, 14]}>
             <Avatar
               icon={<ShoppingCartOutlined />}
-              size={50}
+              size={{ xs: 40, sm: 32, md: 40, lg: 50, xl: 64, xxl: 47 }}
               style={{ cursor: "pointer" }}
               onClick={() => navigate("carts/5")}
             />
@@ -71,7 +77,7 @@ export default function HeadersComponent({
 
           <Avatar
             icon={<UserOutlined />}
-            size={50}
+            size={{ xs: 40, sm: 32, md: 40, lg: 50, xl: 64, xxl: 47 }}
             style={{ marginLeft: "0.5rem", cursor: "pointer" }}
           />
         </div>

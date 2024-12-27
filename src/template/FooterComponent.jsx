@@ -26,8 +26,8 @@ export default function FooterComponent({ category }) {
     <>
       <Footer style={{ background: "#EFF3F4" }}>
         {/* Ant Design ©{new Date().getFullYear()} Created by Ant UED */}
-        <Row justify="space-evenly">
-          <Col span={2}>
+        <Row justify="space-around">
+          <Col xs={12} lg={2}>
             <Title level={3}>Shop</Title>
             {category.map((cat, i) => (
               <Link
@@ -48,7 +48,7 @@ export default function FooterComponent({ category }) {
               </Link>
             ))}
           </Col>
-          <Col span={2}>
+          <Col xs={12} lg={2}>
             <Title level={3}>Company</Title>
             <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
               About us
@@ -63,7 +63,7 @@ export default function FooterComponent({ category }) {
               Career
             </Text>
           </Col>
-          <Col span={2}>
+          <Col xs={12} lg={2}>
             <Title level={3}>Support</Title>
             <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
               Help
@@ -78,7 +78,7 @@ export default function FooterComponent({ category }) {
               How to pay ?
             </Text>
           </Col>
-          <Col span={2}>
+          <Col xs={12} lg={2}>
             <Title level={3}>Contacts</Title>
             <Text strong style={{ display: "block", marginBottom: "0.5rem" }}>
               +44 204 578-10-92

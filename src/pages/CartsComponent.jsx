@@ -14,6 +14,7 @@ import {
 import { Content } from "antd/es/layout/layout";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
+import styles from "../styles/App.module.css";
 
 const { Title, Text } = Typography;
 export default function CartsComponent() {
@@ -78,7 +79,7 @@ export default function CartsComponent() {
         }}
       >
         <Row justify="center">
-          <Col span={12} style={{ textAlign: "center" }}>
+          <Col lg={12} style={{ textAlign: "center" }}>
             <Title>Shopping Cart</Title>
             <Title level={3} style={{ marginTop: 0 }}>
               You are eligible for Free Shipping.
@@ -87,9 +88,9 @@ export default function CartsComponent() {
         </Row>
 
         <Row justify="center">
-          <Col span={16}>
+          <Col lg={16}>
             <Row gutter={[16, 16]}>
-              <Col span={14} key={0}>
+              <Col lg={14} key={0}>
                 {products.map((product, i) => (
                   <div key={i}>
                     {i > 0 ? (
@@ -103,16 +104,16 @@ export default function CartsComponent() {
                       ""
                     )}
                     <Row gutter={[32, 8]} key={product.id}>
-                      <Col span={8}>
+                      <Col lg={8}>
                         <Image src={product.image} />
                       </Col>
-                      <Col span={8}>
+                      <Col lg={8}>
                         <Title level={3}>{product.title}</Title>
                         <Text>{product.category}</Text>
                       </Col>
-                      <Col span={8}>
+                      <Col xs={24} lg={8}>
                         <Flex
-                          justify="space-evenly"
+                          justify="space-between"
                           align="center"
                           style={{ marginTop: "1.75rem" }}
                         >
@@ -133,8 +134,11 @@ export default function CartsComponent() {
                   </div>
                 ))}
               </Col>
-              <Col span={10} key={1}>
-                <Card style={{ padding: "0 2rem" }}>
+              <Col lg={10} key={1}>
+                <Card
+                  className={styles.cardSummary}
+                  style={{ padding: "0 2rem" }}
+                >
                   <Title level={3}>Order Summary</Title>
                   {/* Subtotal */}
                   <Row>

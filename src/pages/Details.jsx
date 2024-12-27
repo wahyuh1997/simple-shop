@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import { API_URL } from "../Api";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import {
   Button,
   Col,
@@ -24,6 +24,7 @@ export default function Details() {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [showNotif, setShowNotif] = useState(false);
   const [qty, setQty] = useState(1);
+  const isFirstRender = useRef(true);
 
   const { totalCart, setTotalCart } = useContext(ProductContext);
 
@@ -49,6 +50,11 @@ export default function Details() {
       }
     }
 
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
     fetchSingleData();
   }, [params.productsId]);
 
@@ -71,26 +77,30 @@ export default function Details() {
 
       const data = await res.json();
       console.log(data);
+      setShowNotif(true);
     } catch (error) {
       console.log(error);
     } finally {
       setButtonLoading(false);
-      setShowNotif(true);
     }
   }
 
+  const [notif, contextHolder] = notification.useNotification();
+
   useEffect(() => {
     if (showNotif) {
-      notification.success({
+      notif.success({
         message: "Success",
         description: "Add To Cart Successfuly",
         duration: 2, // notification duration in seconds
       });
+      setShowNotif(false); // Reset showNotif to false after showing the notification
     }
-  }, [showNotif]);
+  }, [notif, showNotif]);
 
   return (
     <>
+      {contextHolder}
       <Content
         style={{
           padding: 24,
@@ -106,7 +116,7 @@ export default function Details() {
           </Col>
         </Row>
         <Row gutter={[16, 16]} justify="center">
-          <Col span={7}>
+          <Col lg={7}>
             {loading ? (
               <Skeleton.Image active />
             ) : (
@@ -118,7 +128,7 @@ export default function Details() {
               />
             )}
           </Col>
-          <Col span={9}>
+          <Col lg={9}>
             <Col>
               {loading ? (
                 <Skeleton active paragraph={{ rows: 2 }} title={false} />
@@ -195,8 +205,8 @@ export default function Details() {
             </Col>
           </Col>
         </Row>
-        <Row>
-          <Col span={16} offset={4}>
+        <Row justify={"center"} style={{ marginTop: "2rem" }}>
+          <Col lg={16}>
             <Title level={2}>Product Description</Title>
             <Title level={5} style={{ marginTop: "0.5rem" }}>
               There`s nothing I really wanted to do in life that I wasn`t able
@@ -207,8 +217,8 @@ export default function Details() {
             </Title>
           </Col>
         </Row>
-        <Row>
-          <Col span={16} offset={4}>
+        <Row justify={"center"}>
+          <Col lg={16}>
             <Title level={5}>Benefits</Title>
             <ul>
               <li>
@@ -227,8 +237,8 @@ export default function Details() {
             </ul>
           </Col>
         </Row>
-        <Row>
-          <Col span={16} offset={4}>
+        <Row justify={"center"}>
+          <Col lg={16}>
             <Title level={5}>More about product</Title>
             <Text>
               There`s nothing I really wanted to do in life that I wasn`t able
